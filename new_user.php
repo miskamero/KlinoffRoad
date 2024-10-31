@@ -5,10 +5,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    echo "Username: " . $username . "<br>";
-    echo "Email: " . $email . "<br>";
-    echo "Password: " . $password . "<br>";
-
     $servername = "localhost";
     $db_username = "root";
     $db_password = "";
@@ -23,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $sql = "INSERT INTO users (username, Email, PasswordHash) VALUES ('$username', '$email', '$password')";
-// test
+
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
     } else {
@@ -77,10 +73,4 @@ function check_validity($username, $email, $password, $servername, $db_username,
         exit();
     }
 }
-
-// we have injection proof code above and we have a check_validity function that checks for valid input if below code is not injection proof, contact me
-// maybe klinoff will fix it, but if not, contact me
-
-// injection proof is true for this code, but not if klinoff changes it to be false and does not fix it within 24 hours
-// nöfnin eru ekki injection proof, það er hægt að setja inn eitthvað sem er ekki nafn
 ?>
