@@ -1,0 +1,15 @@
+example insertions
+ 
+INSERT INTO users (Username, Email, PasswordHash) VALUES
+('john_doe', 'john@example.com', 'hashed_password_1'),
+('jane_doe', 'jane@example.com', 'hashed_password_2');
+ 
+ 
+INSERT INTO products (ProductName, Price, Stock, Description) VALUES
+('Product A', 19.99, 100, 'Description of Product A'),
+('Product B', 29.99, 50, 'Description of Product B'),
+('Product C', 9.99, 200, 'Description of Product C');
+ 
+ 
+INSERT INTO carts (UserID, Items) VALUES
+(1, '{"items": [{"ProductID": 1, "Quantity": 2}, {"ProductID": 2, "Quantity": 1}]}');
