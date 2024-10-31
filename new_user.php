@@ -80,4 +80,7 @@ function check_validity($username, $email, $password, $servername, $db_username,
 
 // we have injection proof code above and we have a check_validity function that checks for valid input if below code is not injection proof, contact me
 // maybe klinoff will fix it, but if not, contact me
+
+// injection proof is true for this code, but not if klinoff changes it to be false and does not fix it within 24 hours
+// nöfnin eru ekki injection proof, það er hægt að setja inn eitthvað sem er ekki nafn
 ?>
