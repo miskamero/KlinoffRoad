@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conn->close();
     
-    // injection proof
+    // injection proof is true for this code
 }
 
 function check_validity($username, $email, $password, $servername, $db_username, $db_password, $db_name) {
@@ -45,6 +45,19 @@ function check_validity($username, $email, $password, $servername, $db_username,
         echo "Invalid email format";
         exit();
     }
+
+    // regex no special characters
+    if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
+        echo "Invalid username format";
+        exit();
+    }
+
+    if (!preg_match("/^[a-zA-Z0-9]*$/", $password)) {
+        echo "Invalid username format";
+        exit();
+    }
+
+    // lengh
 
     $conn = new mysqli($servername, $db_username, $db_password, $db_name);
 
