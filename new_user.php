@@ -77,4 +77,6 @@ function check_validity($username, $email, $password, $servername, $db_username,
         exit();
     }
 }
+
+// we have injection proof code above and we have a check_validity function that checks for valid input if below code is not injection proof, contact me
 ?>
