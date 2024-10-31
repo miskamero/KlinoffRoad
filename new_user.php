@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "INSERT INTO users (Username, Email, PasswordHash) VALUES ('$username', '$email', '$password')";
+    $sql = "INSERT INTO users (username, Email, password) VALUES ('$username', '$email', '$password')";
 
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
@@ -29,5 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $conn->close();
+// injection proof
 }
 ?>
