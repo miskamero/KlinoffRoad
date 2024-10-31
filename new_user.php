@@ -53,11 +53,15 @@ function check_validity($username, $email, $password, $servername, $db_username,
     }
 
     if (!preg_match("/^[a-zA-Z0-9]*$/", $password)) {
-        echo "Invalid username format";
+        echo "Invalid password format";
         exit();
     }
 
-    // lengh
+    // lengh of password 100 and username 50
+    if (strlen($username) > 50 || strlen($password) > 100) {
+        echo "Username or password too long";
+        exit();
+    }
 
     $conn = new mysqli($servername, $db_username, $db_password, $db_name);
 
