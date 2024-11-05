@@ -1,8 +1,6 @@
-
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
-    $email = $_POST['email'];
     $password = $_POST['password'];
 
     $servername = "localhost";
@@ -10,53 +8,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_password = "";
     $db_name = "klinoffroad";
 
-    check_validity($username, $email, $password, $servername, $db_username, $db_password, $db_name);
-
-    $conn = new mysqli($servername, $db_username, $db_password, $db_name);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    $sql = "INSERT INTO users (username, Email, PasswordHash) VALUES ('$username', '$email', '$password')";
-
-    if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-
-    $conn->close();
+    // klinoff is the error message for validation
+    $klinoff = check_validity($username, $password, $servername, $db_username, $db_password, $db_name);
     
-    // injection proof is true for this code
+    // if conatins text
+    if (empty($klinoff)) {
+        $conn = new mysqli($servername, $db_username, $db_password, $db_name);
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $sql = "INSERT INTO users (username, PasswordHash) VALUES ('$username', '$password')";
+
+        if ($conn->query($sql) === TRUE) {
+            // Redirect to login page
+            header("Location: index.php?success=Account created successfully, please login");
+            exit();
+        } else {
+            // Pass back the entered data
+            $error = "Error: " . $sql . "<br>" . $conn->error;
+            header("Location: index.php?error=$klinoff");
+            exit();
+        }
+    }
+    else {
+        // goto new_user.php with error message
+        header("Location: index.php?error=$klinoff");
+    }
+    $conn->close();
 }
 
-function check_validity($username, $email, $password, $servername, $db_username, $db_password, $db_name) {
-    if (empty($username) || empty($email) || empty($password)) {
-        echo "Please fill in all fields";
-        exit();
-    }
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "Invalid email format";
-        exit();
+function check_validity($username, $password, $servername, $db_username, $db_password, $db_name) {
+    if (empty($username) || empty($password)) {
+        return  "Please fill in all fields";
     }
 
     // regex no special characters
     if (!preg_match("/^[a-zA-Z0-9]*$/", $username)) {
-        echo "Invalid username format";
-        exit();
+        return  "Invalid username format";
     }
 
     if (!preg_match("/^[a-zA-Z0-9]*$/", $password)) {
-        echo "Invalid password format";
-        exit();
+        return  "Invalid password format";
     }
 
     // lengh of password 100 and username 50
     if (strlen($username) > 50 || strlen($password) > 100) {
-        echo "Username or password too long";
-        exit();
+        return  "Username or password too long";
     }
 
     $conn = new mysqli($servername, $db_username, $db_password, $db_name);
@@ -65,12 +62,46 @@ function check_validity($username, $email, $password, $servername, $db_username,
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "SELECT * FROM users WHERE username='$username' OR Email='$email'";
+    $sql = "SELECT * FROM users WHERE username='$username'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        echo "Username or email already exists";
-        exit();
+        return  "Username already exists";
     }
+
+    return "";
 }
+
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KlinoffRoad</title>
+    <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <h1>Register</h1>
+
+    <?php if (isset($_GET['error'])): ?>
+        <p style="color: red;">
+            <?php echo htmlspecialchars($_GET['error']); ?>
+        </p>
+    <?php endif; ?>
+
+    <?php if (isset($_GET['success'])): ?>
+        <p style="color: green;">
+            <?php echo htmlspecialchars($_GET['success']); ?>
+        </p>
+    <?php endif; ?>
+
+    <form action="new_user.php" method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password"><br><br>
+        <input type="submit" value="Start the journey of Klinoff">
+    </form> 
+</body>
