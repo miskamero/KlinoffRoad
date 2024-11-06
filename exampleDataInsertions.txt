@@ -8,7 +8,9 @@ INSERT INTO users (Username, Email, PasswordHash) VALUES
 INSERT INTO products (ProductName, Price, Stock, Description) VALUES
 ('Product A', 19.99, 100, 'Description of Product A'),
 ('Product B', 29.99, 50, 'Description of Product B'),
-('Product C', 9.99, 200, 'Description of Product C');
+('Product C', 9.99, 200, 'Description of Product C'),
+('Product D', 39.99, 25, 'Description of Product D'),
+('Product E', 49.99, 10, 'Description of Product E');
  
  
 INSERT INTO carts (CartID, UserID, Items, LastUpdated) VALUES

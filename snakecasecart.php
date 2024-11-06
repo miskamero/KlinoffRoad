@@ -90,12 +90,27 @@ $conn->close();
                 $product = $product_result->fetch_assoc();
                 $conn->close();
                 ?>
+                
                 <li>
                     <?php echo htmlspecialchars($product['ProductName']); ?> - Quantity: <?php echo $quantity; ?> - Price: $<?php echo htmlspecialchars($product['Price'] * $quantity); ?>
+                    <button class="remove-from-cart" data-productid="<?php echo $productID; ?>">Remove</button>
                 </li>
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
     <button onclick="window.location.href = 'sop.php';">Continue Shopping</button>
+    <?php if (!empty($items)): ?>
+        <button onclick="window.location.href = 'checkout.php';">Checkout</button>
+    <?php endif; ?>
+    <script>
+        const removeFromCartButtons = document.querySelectorAll('.remove-from-cart');
+        removeFromCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const productID = button.getAttribute('data-productid');
+                const username = localStorage.getItem('username');
+                window.location.href = `klinoffdeleteoperation.php?username=${username}&productid=${productID}`;
+            });
+        });
+    </script>
 </body>
 </html>

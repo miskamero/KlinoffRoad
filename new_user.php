@@ -104,5 +104,6 @@ function check_validity($username, $password, $servername, $db_username, $db_pas
         <label for="password">Password:</label><br>
         <input type="password" id="password" name="password"><br><br>
         <input type="submit" value="Start the journey of Klinoff">
-    </form> 
+    </form>
+    <button onclick="window.location.href = 'login.php'">Already started the Klinoff journey?</button>
 </body>

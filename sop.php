@@ -61,6 +61,7 @@ $result = $conn->query($sql);
                     // Generate Add to Cart button with a link containing the product ID
                     echo "<button class='add-to-cart' data-productid='$productID'>Add to cart</button>";
                     echo "</div>";
+                    echo "<hr>";
                 }
             } else {
                 echo "No products available.";

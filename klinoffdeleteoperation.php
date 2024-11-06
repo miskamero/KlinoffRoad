@@ -61,6 +61,22 @@ if ($cart_result->num_rows > 0) {
             unset($items[$productid]); // Remove product if quantity is 1
         }
 
+        // add one stock 
+        $product_sql = "SELECT Stock FROM products WHERE ProductID = ?";
+        $product_stmt = $conn->prepare($product_sql);
+        $product_stmt->bind_param("i", $productid);
+        $product_stmt->execute();
+        $product_result = $product_stmt->get_result();
+        $product = $product_result->fetch_assoc();
+        $product = $product['Stock'];
+        
+        $product += 1;
+
+        $update_stock_sql = "UPDATE products SET Stock = ? WHERE ProductID = ?";
+        $update_stock_stmt = $conn->prepare($update_stock_sql);
+        $update_stock_stmt->bind_param("ii", $product, $productid);
+        $update_stock_stmt->execute();
+
         // Update the cart with new items and timestamp
         $items_json = json_encode($items);
         $update_cart_sql = "UPDATE carts SET Items = ?, LastUpdated = NOW() WHERE CartID = ?";
@@ -77,6 +93,6 @@ if ($cart_result->num_rows > 0) {
 $conn->close();
 
 // Redirect back to shop or show a success message
-header("Location: sop.php");
+header("Location: snakecasecart.php?username=$username");
 exit();
 ?>

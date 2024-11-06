@@ -114,5 +114,6 @@ function check_user($username, $password, $servername, $db_username, $db_passwor
         <label for="password">Password:</label><br>
         <input type="password" id="password" name="password"><br><br>
         <input type="submit" value="Continue the journey of Klinoff">
-    </form> 
+    </form>
+    <button onclick="window.location.href = 'new_user.php';">Still haven't started the Klinoff journey?</button>
 </body>
