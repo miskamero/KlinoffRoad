@@ -1,4 +1,11 @@
 <?php
+echo "<script>
+    const username = localStorage.getItem('username');
+    if (username === null) {
+        window.location.href = 'index.php';
+    }
+</script>";
+
 $servername = "localhost";
 $db_username = "root";
 $db_password = "";
@@ -30,21 +37,61 @@ $result = $conn->query($sql);
     <div id="logoutButton">
         <button onclick="window.location.href = 'logout.php';">Logout</button>
     </div>
-    <?php
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while($row = $result->fetch_assoc()) {
-            echo "<div>";
-            echo "<h2>" . htmlspecialchars($row["ProductName"]) . "</h2>";
-            echo "<p>Price: $" . htmlspecialchars($row["Price"]) . "</p>";
-            echo "<p>Stock: " . htmlspecialchars($row["Stock"]) . "</p>";
-            echo "<p>Description: " . htmlspecialchars($row["Description"]) . "</p>";
-            echo "</div>";
+    <div id="shoppingCart">
+        <button onclick="EpicCar()">Shopping Cart</button>
+    </div>
+
+    <div id="products">
+        <?php
+            if ($result->num_rows > 0) {
+                // Output data of each row
+                while ($row = $result->fetch_assoc()) {
+                    $productID = htmlspecialchars($row["ProductID"]);
+                    $productName = htmlspecialchars($row["ProductName"]);
+                    $price = htmlspecialchars($row["Price"]);
+                    $stock = htmlspecialchars($row["Stock"]);
+                    $description = htmlspecialchars($row["Description"]);
+                    
+                    echo "<div>";
+                    echo "<h2>$productName</h2>";
+                    echo "<p>Price: $$price</p>";
+                    echo "<p>Stock: $stock</p>";
+                    echo "<p>Description: $description</p>";
+                    
+                    // Generate Add to Cart button with a link containing the product ID
+                    echo "<button class='add-to-cart' data-productid='$productID'>Add to cart</button>";
+                    echo "</div>";
+                }
+            } else {
+                echo "No products available.";
+            }
+            $conn->close();
+        ?>
+    </div>
+
+    <script>
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const productId = button.getAttribute('data-productid');
+                const username = localStorage.getItem('username');
+                if (username) {
+                    const url = `addcart.php?productid=${productId}&username=${encodeURIComponent(username)}`;
+                    window.location.href = url;
+                } else {
+                    window.location.href = 'index.php';
+                }
+            });
+        });
+
+        const EpicCar = () => {
+            const username = localStorage.getItem('username');
+            if (username) {
+                window.location.href = 'snakecasecart.php?username=' + encodeURIComponent(username);
+            } else {
+                window.location.href = 'index.php';
+            }
         }
-    } else {
-        echo "No products available.";
-    }
-    $conn->close();
-    ?>
+        
+    </script>
 </body>
 </html>

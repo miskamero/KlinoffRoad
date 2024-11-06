@@ -11,5 +11,5 @@ INSERT INTO products (ProductName, Price, Stock, Description) VALUES
 ('Product C', 9.99, 200, 'Description of Product C');
  
  
-INSERT INTO carts (UserID, Items) VALUES
-(1, '{"items": [{"ProductID": 1, "Quantity": 2}, {"ProductID": 2, "Quantity": 1}]}');
+INSERT INTO carts (CartID, UserID, Items, LastUpdated) VALUES
+(9, 9, '{"Product A": 2, "Product B": 1}', '2021-01-01 12:00:00');
