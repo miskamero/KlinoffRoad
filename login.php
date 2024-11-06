@@ -1,4 +1,5 @@
 <?php
+// login page for the user to login to the website and access the content of the website named "KlinoffRoad" that is a website for off-road enthusiasts.
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -9,36 +10,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_name = "klinoffroad";
 
     // klinoff is the error message for validation
-    // it is named "klinoff" because it is the error message for the validation and klinoff is mostly used in the code because "Big Klinoff" is watching. :O
-    $klinoff = check_validity($username, $password, $servername, $db_username, $db_password, $db_name);
+    $klinoff = check_user($username, $password, $servername, $db_username, $db_password, $db_name);
     
+    // echo $klinoff;
+    // die();
     // if conatins text
     if (empty($klinoff)) {
         $conn = new mysqli($servername, $db_username, $db_password, $db_name);
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        $sql = "INSERT INTO users (username, PasswordHash) VALUES ('$username', '$password')";
+        $sql = "SELECT * FROM users WHERE Username='$username' AND PasswordHash='$password'";
+
+        // echo $sql;
+        // die();
         $result = $conn->query($sql);
-        if ($result === TRUE) {
-            // Redirect to login page
-            header("Location: index.php?success=Account created successfully, please login");
+
+        if ($result->num_rows == 1) {
+            echo "<script>
+                localStorage.setItem('username', '" . $username . "');
+                localStorage.setItem('password', '" . $password . "');
+                window.location.href = 'sop.php';
+            </script>";
             exit();
         } else {
             // Pass back the entered data
             $error = "Error: " . $sql . "<br>" . $conn->error;
-            header("Location: new_user.php?error=$klinoff");
+            header("Location: login.php?error=password is incorrect");
             exit();
         }
     }
     else {
         // goto new_user.php with error message
-        header("Location: new_user.php?error=$klinoff");
+        header("Location: login.php?error=$klinoff");
     }
     $conn->close();
 }
 
-function check_validity($username, $password, $servername, $db_username, $db_password, $db_name) {
+function check_user($username, $password, $servername, $db_username, $db_password, $db_name) {
     if (empty($username) || empty($password)) {
         return  "Please fill in all fields";
     }
@@ -58,21 +67,22 @@ function check_validity($username, $password, $servername, $db_username, $db_pas
     }
 
     $conn = new mysqli($servername, $db_username, $db_password, $db_name);
-
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-
     $sql = "SELECT * FROM users WHERE username='$username'";
+
     $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        return  "Username already exists";
+    if ($result->num_rows == 1) {
+        return "";
     }
-
-    return "";
+    else if ($result->num_rows == 0) {
+        return "Username does not exist";
+    }
+    else {
+        return "Fatal error contact KlinoffAdmin";
+    }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +94,7 @@ function check_validity($username, $password, $servername, $db_username, $db_pas
     <link rel="icon" href="assets/favicon.png" type="image/x-icon">
 </head>
 <body>
-    <h1>Register</h1>
+    <h1>Login</h1>
 
     <?php if (isset($_GET['error'])): ?>
         <p style="color: red;">
@@ -98,11 +108,11 @@ function check_validity($username, $password, $servername, $db_username, $db_pas
         </p>
     <?php endif; ?>
 
-    <form action="new_user.php" method="post">
+    <form action="login.php" method="post">
         <label for="username">Username:</label><br>
         <input type="text" id="username" name="username"><br>
         <label for="password">Password:</label><br>
         <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Start the journey of Klinoff">
+        <input type="submit" value="Continue the journey of Klinoff">
     </form> 
 </body>
