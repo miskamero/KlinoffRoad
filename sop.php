@@ -1,9 +1,9 @@
 <?php
 echo "<script>
-    const username = localStorage.getItem('username');
-    if (username === null) {
-        window.location.href = 'index.php';
-    }
+const username = localStorage.getItem('username');
+if (username === null) {
+    window.location.href = 'index.php';
+}
 </script>";
 
 $servername = "localhost";
@@ -22,6 +22,7 @@ if ($conn->connect_error) {
 // Fetch products from the database
 $sql = "SELECT * FROM products";
 $result = $conn->query($sql);
+
 ?>
 
 <!DOCTYPE html>

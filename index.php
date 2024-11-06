@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KlinoffRoad</title>
     <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -18,17 +19,22 @@
                 window.location.href = 'sop.php';
             } else {
                 document.getElementById('welcome').innerHTML = 'KlinoffRoad';
+                if (!window.location.href.endsWith('.php')) {
+                    setTimeout(() => {
+                        feedbackText.style.opacity = '0';
+                    }, 3000);
+                }
             }
         </script>";
 
         // check for the "error" in url, and get the data from it and display it
         if (isset($_GET['error'])) {
             $error = $_GET['error'];
-            echo "<p style='color: red;'>$error</p>";
+            echo "<p id='feedbackText' style='color: red;'>$error</p>";
         }
         if (isset($_GET['success'])) {
             $error = $_GET['success'];
-            echo "<p style='color: green;'>$error</p>";
+            echo "<p id='feedbackText' style='color: green;'>$error</p>";
         }
         
     ?>

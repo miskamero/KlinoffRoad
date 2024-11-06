@@ -1,4 +1,5 @@
 <?php
+
 // login page for the user to login to the website and access the content of the website named "KlinoffRoad" that is a website for off-road enthusiasts.
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -27,6 +28,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($sql);
 
         if ($result->num_rows == 1) {
+            if (!isset($_COOKIE['KlinoffUsername'])) {
+                setcookie("KlinoffUsername", $username, time() + 1800, "/"); // set username as a cookie for KlinoffU0 minutes. The "/" means that the cookie is available in the entire website.
+            } else {
+                $error = "Session already exists";
+                header("Location: login.php?error=$error");
+                exit();
+            }
             echo "<script>
                 localStorage.setItem('username', '" . $username . "');
                 localStorage.setItem('password', '" . $password . "');

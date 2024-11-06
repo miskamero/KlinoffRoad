@@ -1,4 +1,5 @@
 <?php
+setcookie("KlinoffUsername", "", time() - 3600, "/");
 echo "<script>
         localStorage.removeItem('username');
         localStorage.removeItem('password');
