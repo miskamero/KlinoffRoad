@@ -46,26 +46,19 @@ $result = $conn->query($sql);
         // Get plaintext from cookie named "KlinoffUsername"
         $plaintext = $_COOKIE['KlinoffUsername'];
 
-        // Verify the key
-        if ($key === false) {
-            echo "Key not found.<br>";
+        // Encrypt the plaintext
+        $encrypted = encryptString($plaintext);
+        if ($encrypted === false) {
+            echo "Encryption failed.<br>";
         } else {
-            echo "Key: " . $key . "<br>";
+            echo "Encrypted: " . $encrypted . "<br>";
 
-            // Encrypt the plaintext
-            $encrypted = encryptString($plaintext, $key);
-            if ($encrypted === false) {
-                echo "Encryption failed.<br>";
+            // Decrypt the ciphertext
+            $decrypted = decryptString($encrypted);
+            if ($decrypted === false) {
+                echo "Decryption failed.<br>";
             } else {
-                echo "Encrypted: " . $encrypted . "<br>";
-
-                // Decrypt the ciphertext
-                $decrypted = decryptString($encrypted, $key);
-                if ($decrypted === false) {
-                    echo "Decryption failed.<br>";
-                } else {
-                    echo "Decrypted: " . htmlentities($decrypted, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "<br>";
-                }
+                echo "Decrypted: " . htmlentities($decrypted, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "<br>";
             }
         }
     ?>

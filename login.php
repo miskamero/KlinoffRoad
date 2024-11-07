@@ -13,6 +13,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // klinoff is the error message for validation
     $klinoff = check_user($username, $password, $servername, $db_username, $db_password, $db_name);
     
+    // decrypt the password
+    include 'encryptklinoffname.php';
+    echo $password;
+    $password = decryptString($password);
+    echo $password;
+    die();
+    
     // echo $klinoff;
     // die();
     // if conatins text
