@@ -39,6 +39,36 @@ $result = $conn->query($sql);
     <link rel="icon" href="assets/favicon.png" type="image/x-icon">
 </head>
 <body>
+    
+    <?php
+        include 'encryptklinoffname.php';
+
+        // Get plaintext from cookie named "KlinoffUsername"
+        $plaintext = $_COOKIE['KlinoffUsername'];
+
+        // Verify the key
+        if ($key === false) {
+            echo "Key not found.<br>";
+        } else {
+            echo "Key: " . $key . "<br>";
+
+            // Encrypt the plaintext
+            $encrypted = encryptString($plaintext, $key);
+            if ($encrypted === false) {
+                echo "Encryption failed.<br>";
+            } else {
+                echo "Encrypted: " . $encrypted . "<br>";
+
+                // Decrypt the ciphertext
+                $decrypted = decryptString($encrypted, $key);
+                if ($decrypted === false) {
+                    echo "Decryption failed.<br>";
+                } else {
+                    echo "Decrypted: " . htmlentities($decrypted, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "<br>";
+                }
+            }
+        }
+    ?>
     <h1>Shop</h1>
     <div id="logoutButton">
         <button onclick="window.location.href = 'logout.php';">Logout</button>

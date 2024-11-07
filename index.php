@@ -53,36 +53,6 @@
 
     <button onclick="window.location.href = 'new_user.php';">New klinoff? Join Here!</button>
     <button class="login" onclick="window.location.href = 'login.php';">Klinogin</button>
-
-    <?php
-        include 'encryptklinoffname.php';
-
-        // Example plaintext
-        $plaintext = "<script>prompt('KlinoffRoad');</script>";
-
-        // Verify the key
-        if ($key === false) {
-            echo "Key not found.<br>";
-        } else {
-            echo "Key: " . $key . "<br>";
-
-            // Encrypt the plaintext
-            $encrypted = encryptString($plaintext, $key);
-            if ($encrypted === false) {
-                echo "Encryption failed.<br>";
-            } else {
-                echo "Encrypted: " . $encrypted . "<br>";
-
-                // Decrypt the ciphertext
-                $decrypted = decryptString($encrypted, $key);
-                if ($decrypted === false) {
-                    echo "Decryption failed.<br>";
-                } else {
-                    echo "Decrypted: " . $decrypted . "<br>";
-                }
-            }
-        }
-    ?>
 </body>
 
 </html>
