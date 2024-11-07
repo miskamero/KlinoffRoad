@@ -28,18 +28,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($sql);
 
         if ($result->num_rows == 1) {
-            if (!isset($_COOKIE['KlinoffUsername'])) {
+            if (!isset($_COOKIE["KlinoffUsername"])) {
                 setcookie("KlinoffUsername", $username, time() + 1800, "/"); // set username as a cookie for KlinoffU0 minutes. The "/" means that the cookie is available in the entire website.
             } else {
                 $error = "Session already exists";
                 header("Location: login.php?error=$error");
                 exit();
             }
-            echo "<script>
-                localStorage.setItem('username', '" . $username . "');
-                localStorage.setItem('password', '" . $password . "');
-                window.location.href = 'sop.php';
-            </script>";
+            // echo "<script>
+            //     localStorage.setItem('username', '" . $username . "');
+            //     localStorage.setItem('password', '" . $password . "');
+            //     window.location.href = 'sop.php';
+            // </script>";
+            // turn to php
+
+            header("Location: sop.php");
             exit();
         } else {
             // Pass back the entered data
@@ -100,18 +103,32 @@ function check_user($username, $password, $servername, $db_username, $db_passwor
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KlinoffRoad</title>
     <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Login</h1>
 
+    <?php
+    echo 
+        "<script>
+        document.addEventListener('DOMContentLoaded', function() {
+                const feedbackText = document.getElementById('feedbackText');
+                if (!window.location.href.endsWith('.php')) {
+                    setTimeout(() => {
+                        feedbackText.style.opacity = '0';
+                    }, 3000);
+                }
+            });
+        </script>";
+    ?>
     <?php if (isset($_GET['error'])): ?>
-        <p style="color: red;">
+        <p id='feedbackText' style="color: red;">
             <?php echo htmlspecialchars($_GET['error']); ?>
         </p>
     <?php endif; ?>
 
     <?php if (isset($_GET['success'])): ?>
-        <p style="color: green;">
+        <p id='feedbackText' style="color: green;">
             <?php echo htmlspecialchars($_GET['success']); ?>
         </p>
     <?php endif; ?>

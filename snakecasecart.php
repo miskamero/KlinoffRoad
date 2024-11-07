@@ -1,22 +1,26 @@
 <?php
 
-if (!isset($_GET['username'])) {
-    header("Location: index.php");
-}
+// if (!isset($_GET['username'])) {
+//     header("Location: index.php");
+// }
 
 $username = $_GET['username'];
 
 // echo $username;
 // die();
 
-echo "<script>
-// console.log(localStorage.getItem('username') != '$username');
-    if (localStorage.getItem('username') != '$username') {
-        window.location.href = 'index.php';
-    }
-</script>";
+// echo "<script>
+// // console.log(localStorage.getItem('username') != '$username');
+//     if (localStorage.getItem('username') != '$username') {
+//         window.location.href = 'index.php';
+//     }
+// </script>";
 
 session_start();
+if (!isset($_COOKIE['KlinoffUsername'])) {
+    header("Location: index.php");
+}
+
 $servername = "localhost";
 $db_username = "root";
 $db_password = "";
@@ -31,12 +35,16 @@ if ($conn->connect_error) {
 }
 
 // Get the username from local storage
-echo "<script>
-    const username = localStorage.getItem('username');
-    if (username === null) {
-        window.location.href = 'index.php';
-    }
-</script>";
+// echo "<script>
+//     const username = localStorage.getItem('username');
+//     if (username === null) {
+//         window.location.href = 'index.php';
+//     }
+// </script>";
+
+if (!isset($_GET['username'])) {
+    header("Location: index.php");
+}
 
 // Fetch user ID
 $user_sql = "SELECT UserID FROM users WHERE Username = ?";
@@ -107,8 +115,12 @@ $conn->close();
         removeFromCartButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const productID = button.getAttribute('data-productid');
-                const username = localStorage.getItem('username');
-                window.location.href = `klinoffdeleteoperation.php?username=${username}&productid=${productID}`;
+                // const username = localStorage.getItem('username');
+                // window.location.href = `klinoffdeleteoperation.php?username=<?php echo $_COOKIE['KlinoffUsername'] ?> + "&productid=${productID}`;
+                <?php
+                $username11 = $_COOKIE['KlinoffUsername'];
+                echo "window.location.href = 'klinoffdeleteoperation.php?username=$username11&productid=' + productID;";
+                ?>
             });
         });
     </script>

@@ -7,11 +7,9 @@ if (!isset($_GET['productid']) || !isset($_GET['username'])) {
 $productid = $_GET['productid'];
 $username = $_GET['username'];
 
-echo "<script>
-    if (localStorage.getItem('username') != '$username') {
-        window.location.href = 'index.php';
-    }
-</script>";
+if ($_COOKIE['KlinoffUsername'] != $username) {
+    header("Location: index.php");
+}
 
 $servername = "localhost";
 $db_username = "root";
@@ -72,7 +70,8 @@ if ($cart_result->num_rows > 0) {
     if ($stock > 0) {
         $stock = $stock - 1;
     } else {
-        die("Out of stock.");
+        die("Out of stock. <a href='sop.php'>Go back</a>");
+
     }
 
     $update_stock_sql = "UPDATE products SET Stock = ? WHERE ProductID = ?";

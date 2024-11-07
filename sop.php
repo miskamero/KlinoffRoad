@@ -1,10 +1,15 @@
 <?php
-echo "<script>
-const username = localStorage.getItem('username');
-if (username === null) {
-    window.location.href = 'index.php';
+// echo "<script>
+// const username = localStorage.getItem('username');
+// if (username === null) {
+//     window.location.href = 'index.php';
+// }
+// </script>";
+
+if (!isset($_COOKIE['KlinoffUsername'])) {
+    header('Location: index.php');
+    exit;
 }
-</script>";
 
 $servername = "localhost";
 $db_username = "root";
@@ -75,9 +80,9 @@ $result = $conn->query($sql);
         document.querySelectorAll('.add-to-cart').forEach(button => {
             button.addEventListener('click', () => {
                 const productId = button.getAttribute('data-productid');
-                const username = localStorage.getItem('username');
-                if (username) {
-                    const url = `addcart.php?productid=${productId}&username=${encodeURIComponent(username)}`;
+                // const username = localStorage.getItem('username');
+                if (<?php echo isset($_COOKIE['KlinoffUsername']); ?>) {
+                    const url = `addcart.php?productid=${productId}&username=<?php echo ($_COOKIE['KlinoffUsername']); ?>`;
                     window.location.href = url;
                 } else {
                     window.location.href = 'index.php';
@@ -86,9 +91,8 @@ $result = $conn->query($sql);
         });
 
         const EpicCar = () => {
-            const username = localStorage.getItem('username');
-            if (username) {
-                window.location.href = 'snakecasecart.php?username=' + encodeURIComponent(username);
+            if (<?php echo isset($_COOKIE['KlinoffUsername']); ?>) {
+                window.location.href = 'snakecasecart.php?username=<?php echo ($_COOKIE['KlinoffUsername']); ?>';
             } else {
                 window.location.href = 'index.php';
             }

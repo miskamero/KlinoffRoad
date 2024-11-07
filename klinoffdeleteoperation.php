@@ -7,11 +7,15 @@ if (!isset($_GET['productid']) || !isset($_GET['username'])) {
 $productid = $_GET['productid'];
 $username = $_GET['username'];
 
-echo "<script>
-    if (localStorage.getItem('username') != '$username') {
-        window.location.href = 'index.php';
-    }
-</script>";
+// echo "<script>
+//     if (localStorage.getItem('username') != '$username') {
+//         window.location.href = 'index.php';
+//     }
+// </script>";
+
+if (!isset($_COOKIE['KlinoffUsername']) || $_COOKIE['KlinoffUsername'] != $username) {
+    header("Location: index.php");
+}
 
 $servername = "localhost";
 $db_username = "root";
