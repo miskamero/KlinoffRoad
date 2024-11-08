@@ -1,4 +1,4 @@
-# KlinoffRoad
+# <img src="assets/favicon.png" width="35px"> KlinoffRoad
 
 KlinoffRoad is a web application for off-road enthusiasts to shop for products, manage their carts, and complete purchases. This project uses PHP and MySQL and is designed to run on a local XAMPP server.
 
