@@ -1,15 +1,14 @@
 <?php
+include 'encryptklinoffname.php';
+
 // Check if productid and username are provided
-if (!isset($_GET['productid']) || !isset($_GET['username'])) {
-    die("Product ID or username is missing.");
+if (!isset($_GET['productid'])) {
+    die("Product ID is missing.");
 }
 
 $productid = $_GET['productid'];
-$username = $_GET['username'];
-
-if ($_COOKIE['KlinoffUsername'] != $username) {
-    header("Location: index.php");
-}
+$username = decryptString($_COOKIE['KlinoffUsername']) 
+    ?: die("Username is missing.");
 
 $servername = "localhost";
 $db_username = "root";

@@ -15,10 +15,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // decrypt the password
     include 'encryptklinoffname.php';
-    echo $password;
-    $password = decryptString($password);
-    echo $password;
-    die();
+
+    // $originalString = "Hello, World!";
+    // $encryptedString = encryptString($originalString);
+    // $decryptedString = decryptString($encryptedString);
+
+    // echo "Original: $originalString\n";
+    // echo "Encrypted: $encryptedString\n";
+    // echo "Decrypted: $decryptedString\n";
+
+    // echo $password;
+    // $password = decryptString($password);
+    // if ($password === false) {
+    //     echo "Password decryption failed.<br>";
+    // } else {
+    //     echo $password;
+    // }
+    // die();
     
     // echo $klinoff;
     // die();
@@ -28,15 +41,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
-        $sql = "SELECT * FROM users WHERE Username='$username' AND PasswordHash='$password'";
+        $sql = "SELECT * FROM users WHERE Username='$username'";
 
         // echo $sql;
         // die();
         $result = $conn->query($sql);
 
         if ($result->num_rows == 1) {
+            // decrypt the password
+            $row = $result->fetch_assoc();
+            $decrypted = decryptString($row['PasswordHash']);
+            if ($decrypted === false) {
+                echo "Password decryption failed.<br>";
+            } else {
+                // echo $decrypted;
+            }
+
+            if ($password != $decrypted) {
+                $error = "Password is incorrect";
+                header("Location: login.php?error=$error");
+                exit();
+            }
+
+
             if (!isset($_COOKIE["KlinoffUsername"])) {
-                setcookie("KlinoffUsername", $username, time() + 1800, "/"); // set username as a cookie for KlinoffU0 minutes. The "/" means that the cookie is available in the entire website.
+                setcookie("KlinoffUsername", encryptString($username), time() + 1800, "/"); // set username as a cookie for KlinoffU0 minutes. The "/" means that the cookie is available in the entire website.
             } else {
                 $error = "Session already exists";
                 header("Location: login.php?error=$error");

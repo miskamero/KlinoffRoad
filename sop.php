@@ -39,29 +39,6 @@ $result = $conn->query($sql);
     <link rel="icon" href="assets/favicon.png" type="image/x-icon">
 </head>
 <body>
-    
-    <?php
-        include 'encryptklinoffname.php';
-
-        // Get plaintext from cookie named "KlinoffUsername"
-        $plaintext = $_COOKIE['KlinoffUsername'];
-
-        // Encrypt the plaintext
-        $encrypted = encryptString($plaintext);
-        if ($encrypted === false) {
-            echo "Encryption failed.<br>";
-        } else {
-            echo "Encrypted: " . $encrypted . "<br>";
-
-            // Decrypt the ciphertext
-            $decrypted = decryptString($encrypted);
-            if ($decrypted === false) {
-                echo "Decryption failed.<br>";
-            } else {
-                echo "Decrypted: " . htmlentities($decrypted, ENT_QUOTES | ENT_HTML5, 'UTF-8') . "<br>";
-            }
-        }
-    ?>
     <h1>Shop</h1>
     <div id="logoutButton">
         <button onclick="window.location.href = 'logout.php';">Logout</button>
@@ -114,11 +91,7 @@ $result = $conn->query($sql);
         });
 
         const EpicCar = () => {
-            if (<?php echo isset($_COOKIE['KlinoffUsername']); ?>) {
-                window.location.href = 'snakecasecart.php?username=<?php echo ($_COOKIE['KlinoffUsername']); ?>';
-            } else {
-                window.location.href = 'index.php';
-            }
+            window.location.href = 'snakecasecart.php';
         }
         
     </script>

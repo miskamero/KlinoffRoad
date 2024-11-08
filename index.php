@@ -30,8 +30,12 @@
         //     }
         </script>";
         // turn to cookies
+        include 'encryptklinoffname.php';
         if (isset($_COOKIE['KlinoffUsername'])) {
-            if ($_COOKIE['KlinoffUsername'] === 'admin') {
+            $s = decryptString($_COOKIE['KlinoffUsername']);
+            // echo $s;
+            // die();
+            if ($s === 'admin') {
                 header('Location: admin.php');
             } else {
                 header('Location: sop.php');
