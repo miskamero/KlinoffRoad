@@ -90,7 +90,7 @@ $conn->close();
                 ?>
                 
                 <li>
-                    <?php echo htmlspecialchars($product['ProductName']); ?> - Quantity: <?php echo $quantity; ?> - Price: $<?php echo htmlspecialchars($product['Price'] * $quantity); ?>
+                    <?php echo htmlspecialchars($product['ProductName']); ?> - Quantity: <?php echo $quantity; ?> - Price: <?php echo htmlspecialchars($product['Price'] * $quantity); ?> €
                     <button class="remove-from-cart" data-productid="<?php echo $productID; ?>">Remove</button>
                 </li>
             <?php endforeach; ?>

@@ -60,7 +60,7 @@ $result = $conn->query($sql);
                     
                     echo "<div>";
                     echo "<h2>$productName</h2>";
-                    echo "<p>Price: $$price</p>";
+                    echo "<p>Price: $price €</p>";
                     echo "<p>Stock: $stock</p>";
                     echo "<p>Description: $description</p>";
                     
