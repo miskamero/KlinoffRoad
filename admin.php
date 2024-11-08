@@ -1,8 +1,15 @@
 <?php
-session_start();
-// if not admin, redirect to index.php
-if (!isset($_COOKIE['KlinoffUsername']) || $_COOKIE['KlinoffUsername'] != "admin") {
+include 'encryptklinoffname.php';
+
+if (!isset($_COOKIE['KlinoffUsername'])) {
     header("Location: index.php");
+}
+
+$username = decryptString($_COOKIE['KlinoffUsername']) 
+    ?: die("Username is missing.");
+
+if ($username !== "admin") {
+    die("You are not authorized to access this page.");
 }
 
 $servername = "localhost";
@@ -40,11 +47,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_book'])) {
     $stmt->close();
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modify_book'])) {
+    $bookID = $_POST['book_id'];
+    $bookName = $_POST['book_name'];
+    $price = $_POST['price'];
+    $stock = $_POST['stock'];
+    $description = $_POST['description'];
+    $sql = "UPDATE products SET ProductName = ?, Price = ?, Stock = ?, Description = ? WHERE ProductID = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sdisi", $bookName, $price, $stock, $description, $bookID);
+    $stmt->execute();
+    $stmt->close();
+}
+
+include 'encryptklinoffname.php';
+
 // Handle user modification
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['modify_user'])) {
     $userID = $_POST['user_id'];
     $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password = encryptString($_POST['password']);
 
     $sql = "UPDATE users SET Username = ?, PasswordHash = ? WHERE UserID = ?";
     $stmt = $conn->prepare($sql);
@@ -76,6 +98,7 @@ $conn->close();
 
     <h2>Books</h2>
     <table>
+    <table>
         <tr>
             <th>Book ID</th>
             <th>Book Name</th>
@@ -86,17 +109,18 @@ $conn->close();
         </tr>
         <?php while ($row = $books_result->fetch_assoc()): ?>
         <tr>
-            <td><?php echo htmlspecialchars($row['ProductID']); ?></td>
-            <td><?php echo htmlspecialchars($row['ProductName']); ?></td>
-            <td><?php echo htmlspecialchars($row['Price']); ?></td>
-            <td><?php echo htmlspecialchars($row['Stock']); ?></td>
-            <td><?php echo htmlspecialchars($row['Description']); ?></td>
-            <td>
-                <form method="post">
+            <form method="post">
+                <td><?php echo htmlspecialchars($row['ProductID']); ?></td>
+                <td><input type="text" name="book_name" value="<?php echo htmlspecialchars($row['ProductName']); ?>"></td>
+                <td><input type="number" name="price" value="<?php echo htmlspecialchars($row['Price']); ?>" step="0.01"></td>
+                <td><input type="number" name="stock" value="<?php echo htmlspecialchars($row['Stock']); ?>" step="1"></td>
+                <td><input type="text" name="description" value="<?php echo htmlspecialchars($row['Description']); ?>"></td>
+                <td>
                     <input type="hidden" name="book_id" value="<?php echo $row['ProductID']; ?>">
                     <input type="submit" name="delete_book" value="Delete">
-                </form>
-            </td>
+                    <input type="submit" name="modify_book" value="Modify">
+                </td>
+            </form>
         </tr>
         <?php endwhile; ?>
     </table>
@@ -106,9 +130,9 @@ $conn->close();
         <label for="book_name">Book Name:</label><br>
         <input type="text" id="book_name" name="book_name"><br>
         <label for="price">Price:</label><br>
-        <input type="text" id="price" name="price"><br>
+        <input type="number" step="0.01" id="price" name="price"><br>
         <label for="stock">Stock:</label><br>
-        <input type="text" id="stock" name="stock"><br>
+        <input type="number" step="1" id="stock" name="stock"><br>
         <label for="description">Description:</label><br>
         <textarea id="description" name="description"></textarea><br>
         <input type="submit" name="add_book" value="Add Book">

@@ -1,5 +1,4 @@
 <?php
-
 include 'encryptklinoffname.php';
 
 if (!isset($_COOKIE['KlinoffUsername'])) {
