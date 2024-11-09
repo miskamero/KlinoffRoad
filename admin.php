@@ -102,7 +102,7 @@ $conn->close();
     <div class="admin-page-container">
         <div class="navigation-container">
             <div class="navigation-buttons">
-                <div class="navigation-button">
+                <div class="navigation-button" onclick="window.location.href = 'admin.php';">
                     <span class="material-symbols-outlined">inventory_2</span>
                     <p>Products</p>
                 </div>
