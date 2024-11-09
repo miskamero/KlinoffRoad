@@ -124,8 +124,8 @@ $conn->close();
 
     <script>
         setTimeout(() => {
-            window.location.href = 'index.php';
-        }, 300000);
+            window.location.href = 'sop.php';
+        }, 3000);
     </script>
 </body>
 </html>
