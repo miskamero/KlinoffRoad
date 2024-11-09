@@ -102,15 +102,15 @@ $conn->close();
     <div class="admin-page-container">
         <div class="navigation-container">
             <div class="navigation-buttons">
-                <div class="navigation-button" onclick="window.location.href = 'admin.php';">
+                <div class="navigation-button" onclick="scrollToSection('productss')">
                     <span class="material-symbols-outlined">inventory_2</span>
                     <p>Products</p>
                 </div>
-                <div class="navigation-button">
+                <div class="navigation-button" onclick="scrollToSection('addProducts')">
                     <span class="material-symbols-outlined">add_box</span>
                     <p>Add Product</p>
                 </div>
-                <div class="navigation-button">
+                <div class="navigation-button" onclick="scrollToSection('users')">
                     <span class="material-symbols-outlined">group</span>
                     <p>Users</p>
                 </div>
@@ -118,7 +118,7 @@ $conn->close();
         </div>
         <div class="control-panel-container">
             <div class="productsContainer">
-                <h2>Products</h2>
+                <h2 id="productss">Products</h2>
                 <div class="product-headers">
                     <div class="product-header">Product ID</div>
                     <div class="product-header">Product Name</div>
@@ -154,7 +154,7 @@ $conn->close();
             </div>
 
             <div class="add-product-container">
-                <h2>Add a Product</h2>
+                <h2 id="addProducts">Add a Product</h2>
                 <div class="add-product-labels">
                     <label for="product_name"> Name</label>
                     <label for="price">Price</label>
@@ -175,7 +175,7 @@ $conn->close();
             </div>
 
             <div class="users-container">
-                <h2>Users</h2>
+                <h2 id="users">Users</h2>
                 <div class="users-headers">
                     <div class="users-header">User ID</div>
                     <div class="users-header">Username</div>
@@ -196,12 +196,12 @@ $conn->close();
                     <?php endwhile; ?>
                 </div>
             </div>
+            <div class="footer">
+                <button onclick="window.location.href = 'logout.php';">Logout</button>
+                <!-- back to sop.php -->
+                <button onclick="window.location.href = 'sop.php';">Back to Shop</button>
+            </div>
         </div>
-    </div>
-    <div class="footer">
-        <button onclick="window.location.href = 'logout.php';">Logout</button>
-        <!-- back to sop.php -->
-        <button onclick="window.location.href = 'sop.php';">Back to Shop</button>
     </div>
 
     <script>
@@ -219,6 +219,13 @@ $conn->close();
         }
 
         document.getElementById('search').addEventListener('input', searchProducts);
+
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
     </script>
 </body>
 </html>
