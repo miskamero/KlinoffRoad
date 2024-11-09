@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f0f0f0;
+}
+
+.header {
+    background-color: #045890;
+    color: white;
+    padding: 8px;
+    text-align: center;
+}
+
+#shoppingCart {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+#shoppingCart button {
+    background-color: #045890;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#shoppingCart button:hover {
+    background-color: #023e5a;
+}
+
+#products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+#products>div {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+#products>div:hover {
+    transform: scale(1.05);
+}
+
+#products h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: #045890;
+}
+
+#products p {
+    margin: 10px 0;
+}
+
+#products .add-to-cart {
+    background-color: #045890;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#products .add-to-cart:hover {
+    background-color: #023e5a;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #ccc;
+    margin: 20px 0;
+}

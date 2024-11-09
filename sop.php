@@ -37,16 +37,27 @@ $result = $conn->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shop - KlinoffRoad</title>
     <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="sopcss.css">
 </head>
 <body>
-    <h1>Shop</h1>
-    <div id="logoutButton">
-        <button onclick="window.location.href = 'logout.php';">Logout</button>
+    <div class="header">
+        <h1>Shop - KlinoffRoad - For the 
+            <?php
+                $adjectives = ['adventurous', 'bold', 'brave', 'courageous', 'daring', 'fearless', 'heroic', 'intrepid', 'valiant', 'valorous'];
+                $adjective = $adjectives[array_rand($adjectives)];
+                echo $adjective;
+
+                // username
+                include 'encryptklinoffname.php';
+                $username = decryptString($_COOKIE['KlinoffUsername']);
+                echo " $username";
+
+            ?>
+        </h1>
     </div>
     <div id="shoppingCart">
         <button onclick="EpicCar()">Shopping Cart</button>
     </div>
-
     <div id="products">
         <?php
             if ($result->num_rows > 0) {

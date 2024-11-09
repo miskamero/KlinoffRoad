@@ -52,9 +52,22 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout - KlinoffRoad</title>
     <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="checkoutcss.css">
 </head>
 <body>
-    <h1>Checkout</h1>
+    <h1>Checkout  - For the 
+            <?php
+                $adjectives = ['adventurous', 'bold', 'brave', 'courageous', 'daring', 'fearless', 'heroic', 'intrepid', 'valiant', 'valorous'];
+                $adjective = $adjectives[array_rand($adjectives)];
+                echo $adjective;
+
+                // username
+                include 'encryptklinoffname.php';
+                $username = decryptString($_COOKIE['KlinoffUsername']);
+                echo " $username";
+
+            ?> </h1>
+    
     <img src="assets/favicon.png" alt="KlinoffRoad Logo">
     <?php if (empty($items)): ?>
         <p>Your cart is empty. <a href="sop.php">Go back to shop</a></p>
@@ -87,7 +100,6 @@ $conn->close();
             <input type="text" id="credit_card" name="credit_card" placeholder="1234-5678-9012-3456">
             <input type="text" id="expiration_date" name="expiration_date" placeholder="MM/YY">
             <input type="number" id="cvv" name="cvv" placeholder="CVV">
-
             <br>
             <input type="submit" value="Complete Checkout">
         </form>

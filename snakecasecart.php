@@ -69,9 +69,21 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart - KlinoffRoad</title>
     <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="snakecartcss.css">
 </head>
 <body>
-    <h1>Shopping Cart</h1>
+    <h1>Shopping Cart  - For the 
+            <?php
+                $adjectives = ['adventurous', 'bold', 'brave', 'courageous', 'daring', 'fearless', 'heroic', 'intrepid', 'valiant', 'valorous'];
+                $adjective = $adjectives[array_rand($adjectives)];
+                echo $adjective;
+
+                // username
+                include 'encryptklinoffname.php';
+                $username = decryptString($_COOKIE['KlinoffUsername']);
+                echo " $username";
+
+            ?></h1>
     <?php if (empty($items)): ?>
         <p>Your cart is empty.</p>
     <?php else: ?>
