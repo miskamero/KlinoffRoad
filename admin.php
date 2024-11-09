@@ -163,7 +163,7 @@ $conn->close();
             <div class="users-header">User ID</div>
             <div class="users-header">Username</div>
             <div class="users-header">Password</div>
-            <div class="users-header">Save</div>
+            <div class="users-header">Save Changes to User</div>
         </div>
         <div class="users-grid">
             <?php while ($row = $users_result->fetch_assoc()): ?>
