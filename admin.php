@@ -99,87 +99,105 @@ $conn->close();
     <div class="header">
         <h1>KlinoffRoad Admin Panel</h1>
     </div>
-
-    <div class="productsContainer">
-        <h2>Products</h2>
-        <div class="product-headers">
-            <div class="product-header">Product ID</div>
-            <div class="product-header">Product Name</div>
-            <div class="product-header">Price</div>
-            <div class="product-header">Stock</div>
-            <div class="product-header">Description</div>
-            <div class="product-header">Action</div>
-        </div>
-        <div class="products-search">
-            <div id="search-filter-by">
-                <span class="material-symbols-outlined">chevron_right</span>
-                <p>Filter by:</p>
-            </div>
-            <input type="text" id="search" placeholder="Search products...">
-            <span id="search-icon" class="material-symbols-outlined">search</span>
-        </div>
-        <div class="product-grid">
-            <?php while ($row = $products_result->fetch_assoc()): ?>
-            <form method="post" class="product-row">
-                <div class="productid"><?php echo htmlspecialchars($row['ProductID']); ?></div>
-                <div><input type="text" name="product_name" value="<?php echo htmlspecialchars($row['ProductName']); ?>"></div>
-                <div><input type="number" name="price" value="<?php echo htmlspecialchars($row['Price']); ?>" step="0.01"></div>
-                <div><input type="number" name="stock" value="<?php echo htmlspecialchars($row['Stock']); ?>" step="1"></div>
-                <div><input type="text" name="description" value="<?php echo htmlspecialchars($row['Description']); ?>"></div>
-                <div>
-                    <input type="hidden" name="product_id" value="<?php echo $row['ProductID']; ?>">
-                    <input type="submit" name="modify_product" value="Save">
-                    <input type="submit" name="delete_product" value="Delete">
+    <div class="admin-page-container">
+        <div class="navigation-container">
+            <div class="navigation-buttons">
+                <div class="navigation-button">
+                    <span class="material-symbols-outlined">inventory_2</span>
+                    <p>Products</p>
                 </div>
-            </form>
-            <?php endwhile; ?>
-        </div>
-    </div>
-
-    <div class="add-product-container">
-        <h2>Add a Product</h2>
-        <div class="add-product-labels">
-            <label for="product_name"> Name</label>
-            <label for="price">Price</label>
-            <label for="stock">Stock</label>
-        </div>
-        <form method="post">
-            <div class="add-product-inputs">
-                <input type="text" id="product_name" name="product_name" placeholder="Name of product">
-                <input type="number" step="0.01" id="price" name="price" placeholder="Price of product">
-                <input type="number" step="1" id="stock" name="stock" placeholder="Amount of stock">
-            </div>
-            <div class="add-product-description">
-                <label for="description">Description:</label><br>
-                <textarea id="description" name="description"></textarea><br>
-            </div>
-            <input type="submit" name="add_product" value="Add Product">
-        </form>
-    </div>
-
-    <div class="users-container">
-        <h2>Users</h2>
-        <div class="users-headers">
-            <div class="users-header">User ID</div>
-            <div class="users-header">Username</div>
-            <div class="users-header">Password</div>
-            <div class="users-header">Save Changes to User</div>
-        </div>
-        <div class="users-grid">
-            <?php while ($row = $users_result->fetch_assoc()): ?>
-            <form method="post" class="user-row">
-                <div><?php echo htmlspecialchars($row['UserID']); ?></div>
-                <div><input type="text" name="username" value="<?php echo htmlspecialchars($row['Username']); ?>"></div>
-                <div><input type="password" name="password"></div>
-                <div>
-                    <input type="hidden" name="user_id" value="<?php echo $row['UserID']; ?>">
-                    <input type="submit" name="modify_user" value="Save">
+                <div class="navigation-button">
+                    <span class="material-symbols-outlined">add_box</span>
+                    <p>Add Product</p>
                 </div>
-            </form>
-            <?php endwhile; ?>
+                <div class="navigation-button">
+                    <span class="material-symbols-outlined">group</span>
+                    <p>Users</p>
+                </div>
+            </div>
+        </div>
+        <div class="control-panel-container">
+            <div class="productsContainer">
+                <h2>Products</h2>
+                <div class="product-headers">
+                    <div class="product-header">Product ID</div>
+                    <div class="product-header">Product Name</div>
+                    <div class="product-header">Price</div>
+                    <div class="product-header">Stock</div>
+                    <div class="product-header">Description</div>
+                    <div class="product-header">Action</div>
+                </div>
+                <div class="products-search">
+                    <div id="search-filter-by">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                        <p>Filter by:</p>
+                    </div>
+                    <input type="text" id="search" placeholder="Search products...">
+                    <span id="search-icon" class="material-symbols-outlined">search</span>
+                </div>
+                <div class="product-grid">
+                    <?php while ($row = $products_result->fetch_assoc()): ?>
+                    <form method="post" class="product-row">
+                        <div class="productid"><?php echo htmlspecialchars($row['ProductID']); ?></div>
+                        <div><input type="text" name="product_name" value="<?php echo htmlspecialchars($row['ProductName']); ?>"></div>
+                        <div><input type="number" name="price" value="<?php echo htmlspecialchars($row['Price']); ?>" step="0.01"></div>
+                        <div><input type="number" name="stock" value="<?php echo htmlspecialchars($row['Stock']); ?>" step="1"></div>
+                        <div><input type="text" name="description" value="<?php echo htmlspecialchars($row['Description']); ?>"></div>
+                        <div>
+                            <input type="hidden" name="product_id" value="<?php echo $row['ProductID']; ?>">
+                            <input type="submit" name="modify_product" value="Save">
+                            <input type="submit" name="delete_product" value="Delete">
+                        </div>
+                    </form>
+                    <?php endwhile; ?>
+                </div>
+            </div>
+
+            <div class="add-product-container">
+                <h2>Add a Product</h2>
+                <div class="add-product-labels">
+                    <label for="product_name"> Name</label>
+                    <label for="price">Price</label>
+                    <label for="stock">Stock</label>
+                </div>
+                <form method="post">
+                    <div class="add-product-inputs">
+                        <input type="text" id="product_name" name="product_name" placeholder="Name of product">
+                        <input type="number" step="0.01" id="price" name="price" placeholder="Price of product">
+                        <input type="number" step="1" id="stock" name="stock" placeholder="Amount of stock">
+                    </div>
+                    <div class="add-product-description">
+                        <label for="description">Description:</label><br>
+                        <textarea id="description" name="description"></textarea><br>
+                    </div>
+                    <input type="submit" name="add_product" value="Add Product">
+                </form>
+            </div>
+
+            <div class="users-container">
+                <h2>Users</h2>
+                <div class="users-headers">
+                    <div class="users-header">User ID</div>
+                    <div class="users-header">Username</div>
+                    <div class="users-header">Password</div>
+                    <div class="users-header">Save Changes to User</div>
+                </div>
+                <div class="users-grid">
+                    <?php while ($row = $users_result->fetch_assoc()): ?>
+                    <form method="post" class="user-row">
+                        <div><?php echo htmlspecialchars($row['UserID']); ?></div>
+                        <div><input type="text" name="username" value="<?php echo htmlspecialchars($row['Username']); ?>"></div>
+                        <div><input type="password" name="password"></div>
+                        <div>
+                            <input type="hidden" name="user_id" value="<?php echo $row['UserID']; ?>">
+                            <input type="submit" name="modify_user" value="Save">
+                        </div>
+                    </form>
+                    <?php endwhile; ?>
+                </div>
+            </div>
         </div>
     </div>
-
     <div class="footer">
         <button onclick="window.location.href = 'logout.php';">Logout</button>
         <!-- back to sop.php -->

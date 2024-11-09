@@ -38,6 +38,56 @@ body::-webkit-scrollbar-track {
     text-align: center;
 }
 
+.admin-page-container {
+    display: grid;
+    grid-template-columns: 1fr 24fr;
+}
+
+.navigation-container {
+    /* sticky sidebar */
+    position: sticky;
+    width: 79px;
+    top: 0;
+    height: 100vh;
+    background-color: #045890;
+    color: white;
+    padding: 1em;
+    transition: width 0.2s ease-in-out;
+}
+
+.navigation-container:hover {
+    width: 150px;
+}
+
+.navigation-container:hover .navigation-button > span {
+    display: inline;
+}
+
+.navigation-container:hover ~ .control-panel-container {
+    filter: blur(2px);
+}
+
+
+.navigation-button {
+    /* background-color: #045890; */
+    text-align: center;
+    cursor: pointer;
+}
+
+/* the navigation-button class has a span element (icon) and a p element (text) */
+
+.navigation-button > span, .navigation-button > p {
+    transition: transform 0.2s;
+}
+
+/* .navigation-button:hover > span {
+    transform: scale(1.1);
+} */
+
+.navigation-button:hover > span, .navigation-button:hover > p {
+    color: #023e5a;
+}
+
 .productsContainer {
     display: flex;
     justify-content: center;
