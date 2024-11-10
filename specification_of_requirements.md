@@ -1,8 +1,8 @@
 # KlinoffRoad
 
 **Group Members:**
-- **miskamero**
-- **jooapa**
+- [miskamero](https://github.com/miskamero)
+- [jooapa](https://github.com/jooapa)
 
 **Version:**
 - **1.0 (10.11.2024)**
