@@ -57,6 +57,14 @@ $result = $conn->query($sql);
     </div>
     <div id="shoppingCart">
         <button onclick="EpicCar()">Shopping Cart</button>
+        <?php
+            //if admin
+            include 'encryptklinoffname.php';
+            $username = decryptString($_COOKIE['KlinoffUsername']);
+            if ($username === 'admin') {
+                echo "<button onclick='window.location.href = \"admin.php\";'>Admin Panel</button>";
+            }
+        ?>
     </div>
     <div id="products">
         <?php

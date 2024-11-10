@@ -88,28 +88,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KlinoffRoad</title>
     <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="logincss.css">
 </head>
 <body>
     <h1>Register</h1>
 
-    <?php if (isset($_GET['error'])): ?>
-        <p style="color: red;">
-            <?php echo htmlspecialchars($_GET['error']); ?>
-        </p>
-    <?php endif; ?>
+        <?php if (isset($_GET['error'])): ?>
+            <p style="color: red;">
+                <?php echo htmlspecialchars($_GET['error']); ?>
+            </p>
+        <?php endif; ?>
 
-    <?php if (isset($_GET['success'])): ?>
-        <p style="color: green;">
-            <?php echo htmlspecialchars($_GET['success']); ?>
-        </p>
-    <?php endif; ?>
+        <?php if (isset($_GET['success'])): ?>
+            <p style="color: green;">
+                <?php echo htmlspecialchars($_GET['success']); ?>
+            </p>
+        <?php endif; ?>
 
-    <form action="new_user.php" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
-        <input type="submit" value="Start the journey of Klinoff">
-    </form>
+        <form action="new_user.php" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <input type="submit" value="Start the journey of Klinoff">
+        </form>
     <button onclick="window.location.href = 'login.php'">Already started the Klinoff journey?</button>
 </body>

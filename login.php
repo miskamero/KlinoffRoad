@@ -140,6 +140,7 @@ function check_user($username, $password, $servername, $db_username, $db_passwor
     <title>KlinoffRoad</title>
     <link rel="icon" href="assets/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="logincss.css">
 </head>
 <body>
     <h1>Login</h1>
@@ -170,10 +171,10 @@ function check_user($username, $password, $servername, $db_username, $db_passwor
     <?php endif; ?>
 
     <form action="login.php" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username"><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password"><br><br>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
         <input type="submit" value="Continue the journey of Klinoff">
     </form>
     <button onclick="window.location.href = 'new_user.php';">Still haven't started the Klinoff journey?</button>
